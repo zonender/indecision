@@ -1,13 +1,7 @@
-'use strict';
-
-console.log('app.js is running');
+console.log('app.js is running')
 
 ////JSX - Requires Babel and webpack
-var template = React.createElement(
-  'p',
-  null,
-  'This is JSX! from app.js - using watch'
-);
+var template = <p>This is JSX! from app.js - using watch</p>;
 
 ////Plain JS:
 // "use strict";
