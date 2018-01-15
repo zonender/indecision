@@ -16,9 +16,9 @@ const appObj = {
 };
 
 const bioObj = {
-    name: "Asim",
+    name: 'Asim Abdelgadir',
     age: 45,
-    occupation: "DevOps Engineer",
+    occupation: 'DevOps Engineer',
     Location1: 'New York',
     Location2: 'New Jersey'
 };
@@ -59,7 +59,55 @@ const userDetailsAsOf2 = myDay[myToday.getDay()] + ' ' + myToday.getDate() + ' -
 //     };
 // };
 
-//using an arrow function
+
+// //for the console only: this will not work, generates an error.
+// const testuser1 = {
+//     name: 'Asim',
+//     cities: ['Algadarif', 'Alfashir', 'Leeds', 'New York City', 'Jercey City'],
+//     printPlacedILivedIn: function () {
+//         console.log(this.name);
+//         console.log(this.cities);
+
+//         this.cities.forEach(function (city) {
+//             console.log(that.name + ' has lived in ' + city);
+//         });
+//     }
+// };
+// testuser1.printPlacedILivedIn();
+
+//for the console only: to access this from inside the regular function we had to use athe work around: const that = this;
+const testuser2 = {
+    name: 'Asim',
+    cities: ['Algadarif', 'Alfashir', 'Leeds', 'New York City', 'Jercey City'],
+    printPlacedILivedIn: function () {
+        console.log(this.name);
+        console.log(this.cities);
+
+        const that = this;
+
+        this.cities.forEach(function (city) {
+            console.log(that.name + ' has lived in ' + city);
+        });
+    }
+};
+testuser2.printPlacedILivedIn();
+
+//for the console only: we can also acces this using an arrow function
+const testuser3 = {
+    name: 'Asim',
+    cities: ['Algadarif', 'Alfashir', 'Leeds', 'New York City', 'Jercey City'],
+    printPlacedILivedIn: function () {
+        console.log(this.name);
+        console.log(this.cities);
+
+        this.cities.forEach( (city) => {
+            console.log(this.name + ' has lived in ' + city);
+        });
+    }
+};
+testuser3.printPlacedILivedIn();
+
+//using an arrow function with a function body
 const getLocation1 = (location) => {
         if (location) {
         return <p>Location1: {location}</p>;
@@ -68,10 +116,16 @@ const getLocation1 = (location) => {
 
 //using a regular function
 function getLocation2 (location) {
+    console.log(arguments) //just displays the args, does not wotk with arrow function.
     if (location) {
         return <p>Location2: {location}</p>;
     }
 }
+
+//using function arrow in single line without a function body
+let bioFullName = bioObj.name;
+const getFName = (bioFullName) => bioFullName.split(' ')[0];
+const getLName = (bioFullName) => bioFullName.split(' ')[1];
 
 const appTemplate = (
     <div>
@@ -88,7 +142,9 @@ const appTemplate = (
 const bioTemplate = (
     <div>
         <h1>My Bio</h1>
-        <p>Name: {bioObj.name ? bioObj.name.toUpperCase() + '!' : 'Anonymous'}</p>
+        <p>Full Name: {bioFullName ? bioFullName.toUpperCase() + '!' : 'Anonymous'}</p>
+        <p>F Name: {getFName(bioFullName)}</p>
+        <p>L Name: {getLName(bioFullName)}</p>
         {bioObj.age >= 18 && <p>Age: {bioObj.age}</p>}
         <p>Occupation: {bioObj.occupation}</p>
         {getLocation1(bioObj.Location1)}

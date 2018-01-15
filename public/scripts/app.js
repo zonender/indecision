@@ -18,9 +18,9 @@ var appObj = {
 };
 
 var bioObj = {
-    name: "Asim",
+    name: 'Asim Abdelgadir',
     age: 45,
-    occupation: "DevOps Engineer",
+    occupation: 'DevOps Engineer',
     Location1: 'New York',
     Location2: 'New Jersey'
 };
@@ -60,7 +60,57 @@ var userDetailsAsOf2 = myDay[myToday.getDay()] + ' ' + myToday.getDate() + ' - '
 //     };
 // };
 
-//using an arrow function
+
+// //for the console only: this will not work, generates an error.
+// const testuser1 = {
+//     name: 'Asim',
+//     cities: ['Algadarif', 'Alfashir', 'Leeds', 'New York City', 'Jercey City'],
+//     printPlacedILivedIn: function () {
+//         console.log(this.name);
+//         console.log(this.cities);
+
+//         this.cities.forEach(function (city) {
+//             console.log(that.name + ' has lived in ' + city);
+//         });
+//     }
+// };
+// testuser1.printPlacedILivedIn();
+
+//for the console only: to access this from inside the regular function we had to use athe work around: const that = this;
+var testuser2 = {
+    name: 'Asim',
+    cities: ['Algadarif', 'Alfashir', 'Leeds', 'New York City', 'Jercey City'],
+    printPlacedILivedIn: function printPlacedILivedIn() {
+        console.log(this.name);
+        console.log(this.cities);
+
+        var that = this;
+
+        this.cities.forEach(function (city) {
+            console.log(that.name + ' has lived in ' + city);
+        });
+    }
+};
+testuser2.printPlacedILivedIn();
+
+//for the console only: we can also acces this using an arrow function
+var testuser3 = {
+    name: 'Asim',
+    cities: ['Algadarif', 'Alfashir', 'Leeds', 'New York City', 'Jercey City'],
+    printPlacedILivedIn: function printPlacedILivedIn() {
+        var _this = this;
+
+        console.log(this.name);
+        console.log(this.cities);
+
+        this.cities.forEach(function (city) {
+            console.log(_this.name + ' has lived in ' + city);
+        });
+    }
+};
+testuser3.printPlacedILivedIn();
+
+//using an arrow function with a function body
 var getLocation1 = function getLocation1(location) {
     if (location) {
         return React.createElement(
@@ -74,6 +124,7 @@ var getLocation1 = function getLocation1(location) {
 
 //using a regular function
 function getLocation2(location) {
+    console.log(arguments); //just displays the args, does not wotk with arrow function.
     if (location) {
         return React.createElement(
             'p',
@@ -83,6 +134,15 @@ function getLocation2(location) {
         );
     }
 }
+
+//using function arrow in single line without a function body
+var bioFullName = bioObj.name;
+var getFName = function getFName(bioFullName) {
+    return bioFullName.split(' ')[0];
+};
+var getLName = function getLName(bioFullName) {
+    return bioFullName.split(' ')[1];
+};
 
 var appTemplate = React.createElement(
     'div',
@@ -129,8 +189,20 @@ var bioTemplate = React.createElement(
     React.createElement(
         'p',
         null,
-        'Name: ',
-        bioObj.name ? bioObj.name.toUpperCase() + '!' : 'Anonymous'
+        'Full Name: ',
+        bioFullName ? bioFullName.toUpperCase() + '!' : 'Anonymous'
+    ),
+    React.createElement(
+        'p',
+        null,
+        'F Name: ',
+        getFName(bioFullName)
+    ),
+    React.createElement(
+        'p',
+        null,
+        'L Name: ',
+        getLName(bioFullName)
     ),
     bioObj.age >= 18 && React.createElement(
         'p',
