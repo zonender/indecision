@@ -67,7 +67,8 @@ const renderAddOptions = () => {
     let count = 0;
 
     const addOne = () => {
-        console.log('addOne');
+        count++;
+        console.log('addOne', count);
     };
 
     const minusOne = () => {
